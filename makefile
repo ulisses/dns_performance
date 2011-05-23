@@ -15,3 +15,6 @@ ifeq ($(UNAME_OSX),10.7.0)
 	g++ -Wall -o test1 test1.o test1.cxx
 endif
 
+clean:
+	rm -f *.o *.*~ *~
+
