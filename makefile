@@ -2,19 +2,23 @@ UNAME := $(shell uname -s)
 UNAME_OSX := $(shell uname -r)
 
 LIBS := -lldns
+OUT := test1
 
-test1:test1.c
+$(OUT):test1.c $(OUT).o
 ifeq ($(UNAME),Linux)
-	g++ $(LDFLAGS) $(FLAGS) $(LIBS) -D OS_LINUX -Wall -o test1 test1.cxx
+	g++ $(LIBS) -D OS_LINUX -Wall -o test1 test1.cxx
 endif
 ifeq ($(UNAME_OSX),10.4.0)
-	g++ $(FLAGS) $(LIBS) -D OS_MACOSX_4 -Wall -o test1 test1.cxx
+	g++ $(LIBS) -D OS_MACOSX_4 -Wall -o test1 test1.cxx
 endif
 ifeq ($(UNAME_OSX),10.7.0)
-	gcc -c -Wall -o test1.o test1.c
-	g++ -Wall -o test1 test1.o test1.cxx
+	g++ -lldns -Wall -o $(OUT) test1.o test1.cxx
 endif
 
+
+$(OUT).o:
+	gcc -c -Wall -o $(OUT).o test1.c
+
 clean:
-	rm -f *.o *.*~ *~
+	rm -f *.o *.*~ *~ $(OUT)
 

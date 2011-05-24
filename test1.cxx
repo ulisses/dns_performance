@@ -6,6 +6,7 @@
 #define OS_WIN
 #endif
 
+/*
 int main(int argc, char **argv) {
 #ifdef OS_WIN
 	std::cout << "Not a good day to run this program, please try tomorrow." << std::endl;
@@ -25,3 +26,4 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
+*/
