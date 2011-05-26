@@ -4,7 +4,7 @@ UNAME_OSX := $(shell uname -r)
 LIBS := -lldns
 OUT := test1
 
-$(OUT):test1.c $(OUT).o
+$(OUT):$(OUT).c $(OUT).h $(OUT).o
 ifeq ($(UNAME),Linux)
 	g++ $(LIBS) -D OS_LINUX -Wall -o test1 test1.cxx
 endif
@@ -16,8 +16,8 @@ ifeq ($(UNAME_OSX),10.7.0)
 endif
 
 
-$(OUT).o:
-	gcc -c -Wall -o $(OUT).o test1.c
+$(OUT).o: $(OUT).c $(OUT).h
+	gcc -c -Wall -o $(OUT).o $(OUT).c
 
 clean:
 	rm -f *.o *.*~ *~ $(OUT)
