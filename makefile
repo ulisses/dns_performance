@@ -2,23 +2,24 @@ UNAME := $(shell uname -s)
 UNAME_OSX := $(shell uname -r)
 
 LIBS := -lldns
-OUT := test1
 
-$(OUT):$(OUT).c $(OUT).h $(OUT).o
-ifeq ($(UNAME),Linux)
-	g++ $(LIBS) -D OS_LINUX -Wall -o test1 test1.cxx
-endif
-ifeq ($(UNAME_OSX),10.4.0)
-	g++ $(LIBS) -D OS_MACOSX_4 -Wall -o test1 test1.cxx
-endif
+LDNS := ldns
+MAIN := Main
+RECORD := Record
+
+OBJS := $(RECORD).o $(LDNS).o
+OUT := out
+
+$(OUT):$(OBJS)
 ifeq ($(UNAME_OSX),10.7.0)
-	g++ -lldns -Wall -o $(OUT) test1.o test1.cxx
+	g++ -D OS_MACOSX7 -lldns -Wall -o $(OUT) $(OBJS) $(MAIN).cxx
 endif
 
+$(RECORD).o: $(RECORD).cxx $(RECORD).hxx
+	g++ -c -Wall -o $(RECORD).o $(RECORD).cxx
 
-$(OUT).o: $(OUT).c $(OUT).h
-	gcc -c -Wall -o $(OUT).o $(OUT).c
+$(LDNS).o: $(LDNS).c $(LDNS).h
+	gcc -c -Wall -o $(LDNS).o $(LDNS).c
 
 clean:
-	rm -f *.o *.*~ *~ $(OUT)
-
+	rm -f *.*~ *~ $(OUT) $(OBJS)
