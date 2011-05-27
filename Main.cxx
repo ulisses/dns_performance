@@ -1,9 +1,18 @@
 #include "Main.hxx"
 
-using namespace std;
-
 int main(int argc, char **argv) {
-	Record *r = getRecordFromWebServer(string(argv[1]));
+	vector<string> *v = getTopDomains();
+	vector<Record*> *r = new vector<Record*>();
 
-	cout << r->toString() << endl;
+	for(vector<string>::const_iterator it=v->begin(); it != v->end(); it++) {
+		string elemS = *it;
+		Record *elemR = getRecordFromWebServer(elemS);
+
+		r->push_back(elemR);
+		cout << elemR->toString() << endl;
+	}
+
+	/* hostname, databaseName, username, password*/
+	Data *d = new Data("maclisses.lan","ulisses_db","root1","new-passwd");
+	d->fill(r);
 }
