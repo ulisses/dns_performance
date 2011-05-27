@@ -28,13 +28,17 @@ void sleep(int ms) {
  */
 Record *getRecordFromWebServer(string webserver) {
 	RecordC *r = getResultsForServer(webserver.c_str());
+	Record *ret;
+
 	if(!r) {
 		fprintf(stderr, "ERROR: could not get a RecordC from %s\n", webserver.c_str());
-		exit(-1);
+		ret = NULL;
 	} else {
 		string ns = string(r->nameserver);
-		return new Record(webserver, ns, r->time, r->timestamp);
+		ret = new Record(webserver, ns, r->time, r->timestamp);
 	}
+	free(r);
+	return ret;
 }
 
 /* We can improve this, by reading this list from a file

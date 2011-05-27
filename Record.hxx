@@ -15,7 +15,13 @@ class Record {
 	public:
 		Record(string webserver, string nameserver, int time, struct timeval timestamp);
 		Record(string webserver, string nameserver, int time, long timestamp);
+		
+		string getWebserver()  { return _webserver; }
+		string getNameserver() { return _nameserver; }
+		int getTime()          { return _time; }
+		long getTimestamp()    { return _timestamp; }
+		
 		string toString();
 };
 
-#endif /* RECORD_HXX */
+#endif /*RECORD_HXX*/

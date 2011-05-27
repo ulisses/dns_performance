@@ -22,6 +22,6 @@ RecordC *getResultsForServer(const char *srv);
 
 #ifdef __cplusplus
 }
-#endif // __cplusplus
+#endif /*__cplusplus*/
 
-#endif // TEST1_H
+#endif /*TEST1_H*/

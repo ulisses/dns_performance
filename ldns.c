@@ -1,5 +1,8 @@
 #include "ldns.h"
 
+/* We try to use an address record (A) if we can't
+ * we try to use an IPv6 one (AAAA).
+ */
 ldns_rdf *ldns_rdf_new_addr_frm_str(char *str) {
 	ldns_rdf *a = ldns_rdf_new_frm_str(LDNS_RDF_TYPE_A, str);
 	if (!a) {
@@ -11,6 +14,8 @@ ldns_rdf *ldns_rdf_new_addr_frm_str(char *str) {
 	return a;                         
 }
 
+/* Extract the dns hostname and convert it to char*.
+*/
 char *getAndNormalizeNS(ldns_rr *elemRR) {
 	int i=0;
 	uint8_t *str = ldns_rdf_data(elemRR->_rdata_fields[0]);
@@ -25,6 +30,13 @@ char *getAndNormalizeNS(ldns_rr *elemRR) {
 	return ++ns;
 }
 
+/* Get queryTime from the dns nameserver. Returns -1 if failure
+ * or the time in ms fro the dns query. We change the parameter 'timestamp'
+ * to also return the timestamp associated with the query.
+ *
+ * We could improve this function, by receiving directlly an 'ldns_rdf'
+ * and like so we probably won't need the 'getAndNormalizeNS' function.
+ */
 int getQueryTime(char *nameserver, /*out*/ struct timeval *timestamp) {
 	ldns_resolver *res = NULL, *res2 = NULL;
 	ldns_rr_list *addr_lst = NULL;
@@ -98,7 +110,9 @@ int getQueryTime(char *nameserver, /*out*/ struct timeval *timestamp) {
 
 	return result;
 }
-
+/* Receives the webserver name (e.g. google.com) and returns a record
+ * with all the information we need about this server dns.
+ */
 RecordC *getResultsForServer(const char *srv) {
 	ldns_resolver *res;
 	ldns_rdf *name;

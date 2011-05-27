@@ -14,6 +14,13 @@ Data::Data(string server, string db, string user, string passwd) {
     }
 }
 
+Data::~Data() {
+	free(&_username);
+	free(&_password);
+	free(&_server);
+	free(&_dbname);
+}
+
 void Data::fill(vector<Record*> *r) {
 	try {
 		for(vector<Record*>::const_iterator it=r->begin(); it != r->end(); it++) {

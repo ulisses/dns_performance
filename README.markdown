@@ -12,4 +12,4 @@ shell> create database ulisses_db;
 
 Create the table
 ================
-mysql> create table dnsperf (id INT, avgqtime INT, nrq INT, timefst DATE, timelst DATE);
+mysql> create table dnsperf (webserver VARCHAR(30), avgqtime INT, nrq INT, timefst VARCHAR(30), timelst VARCHAR(30));

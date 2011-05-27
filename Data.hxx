@@ -27,6 +27,7 @@ class Data {
 		mysqlpp::Connection _conn;
 	public:
 	Data(string server, string db, string user, string passwd);
+	~Data();
 
 	void fill(vector<Record*> *r);
 };
